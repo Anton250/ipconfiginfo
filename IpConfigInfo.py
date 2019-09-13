@@ -50,6 +50,9 @@ class IpConfigInfo():
 
                 self.binary_mask = f'{ones:0<8}'
 
+		if (nulls == 0):
+			nulls_o = 0
+
                 for i in range(0, 3):
                         nulls -= 1
                         ones = '1' * 8 if nulls >0 else '1' * nulls_o
