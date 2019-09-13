@@ -54,7 +54,7 @@ class IpConfigInfo():
                         nulls -= 1
                         ones = '1' * 8 if nulls >0 else '1' * nulls_o
                         self.binary_mask = self.binary_mask + f'{form}{ones:0<8}'
-                        if nulls == 0:
+                        if nulls <= 0:
                                 nulls_o = 0
 
                 self.mask = self.get_ip_from_binary(self.binary_mask.split(form))
