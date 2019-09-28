@@ -39,7 +39,7 @@ class IpConfigInfo():
 
                 oct1, oct2, oct3, oct4 = addres[0].split('.')
                 self.binary_address = f'{int(oct1):08b}{form}{int(oct2):08b}{form}{int(oct3):08b}{form}{int(oct4):08b}'
-                self.addres = f'{oct1:8}{form}{oct2:8}{form}{oct3:8}{form}{oct4:8}'
+                self.addres = f'{oct1}{form}{oct2}{form}{oct3}{form}{oct4}'
                 self.num_mask = '/' + self.mask
 
                 nulls = int(self.mask) // 8
@@ -49,10 +49,8 @@ class IpConfigInfo():
                 ones = ('1' * 8 if nulls != 0 else '1' * nulls_o)
 
                 self.binary_mask = f'{ones:0<8}'
-
-		if (nulls == 0):
-			nulls_o = 0
-
+                if (nulls == 0):
+                        nulls_o = 0
                 for i in range(0, 3):
                         nulls -= 1
                         ones = '1' * 8 if nulls >0 else '1' * nulls_o
@@ -79,11 +77,11 @@ class IpConfigInfo():
                         )
                 self.host = self.get_ip_from_binary(self.binary_host.split(form))
                 self.broadcast = self.get_ip_from_binary(self.binary_broadcast.split(form))
-                max_ip = list(self.binary_network)
-                max_ip[-1] = '1'
+                max_ip = list(self.binary_broadcast)
+                max_ip[-1] = '0'
                 self.binary_max_ip = ''.join(max_ip)
-                min_ip = list(self.binary_broadcast)
-                min_ip[-1] = '0'
+                min_ip = list(self.binary_network)
+                min_ip[-1] = '1'
                 self.binary_min_ip = ''.join(min_ip)
                 self.max_ip = self.get_ip_from_binary(self.binary_max_ip.split(form))
                 self.min_ip = self.get_ip_from_binary(self.binary_min_ip.split(form))
@@ -111,7 +109,7 @@ class IpConfigInfo():
 
         def get_ip_from_binary(self, binary):
                 oct1, oct2, oct3, oct4 = binary
-                return f'{int(oct1, 2):<8}{self.form}{int(oct2, 2):<8}{self.form}{int(oct3, 2):<8}{self.form}{int(oct4, 2):<8}'
+                return f'{int(oct1, 2)}{self.form}{int(oct2, 2)}{self.form}{int(oct3, 2)}{self.form}{int(oct4, 2)}'
 
         def get_broadcast(self, a, b):
                 c = ''
